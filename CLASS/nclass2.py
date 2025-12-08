@@ -3,13 +3,10 @@ class Game:
         def __init__(self, name, level):
             self.name = name
             self.level = level
-            pass
-        
-        def player_items(self):
             self.items = []
             pass
 
-        def into(self):
+        def info(self):
             print(f"{self.name} (Level {self.level})")
             
     class Item:
@@ -18,7 +15,7 @@ class Game:
             self.power = power
 
         def info(self):
-            print(f"{self.name} [+{self.power}]")
+            return f"{self.name} [+{self.power}]"
             pass
     def __init__(self,  name):
         self.name = name
@@ -29,17 +26,27 @@ class Game:
         new_player = self.Player(player_name, player_lvl)
         self.gamers.append(new_player)
     
-    def add_item_to_player(self, to_item, item_name, item_power):
+    def add_item_to_player(self, player_name, item_name, item_power):
+        # create the item
         item = self.Item(item_name, item_power)
-        to_item = self.Player.player_items.items(to_item)
-        self.Player.player_items.items.append(to_item)
+
+        # find the correct player and attach the item
+        for player in self.gamers:
+            if player.name == player_name:
+                player.items.append(item)
+                break
         
     def show_players(self):
-        return [play.info() for play in self.gamers]
+        return [player.info() for player in self.gamers]
     
     def show_inventory(self, player_name):
-        return [inv.info() for inv in self.Player.player_items.items]
+        # find player, then return their item infos
+        for player in self.gamers:
+            if player.name == player_name:
+                return [item.info() for item in player.items]
+        return []  # if player not found
     
+
 g = Game("QuestX")
 g.add_player("Sam", 5)
 g.add_player("Alex", 2)
