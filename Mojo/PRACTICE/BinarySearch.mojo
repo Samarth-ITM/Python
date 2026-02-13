@@ -1,6 +1,6 @@
 def main(): 
     nums = [1, 2, 3, 4, 5, 6, 7]
-    target = 0
+    target = 2
     l = 0
     r = len(nums) - 1
     f = 0
