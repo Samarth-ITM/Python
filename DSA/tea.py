@@ -4,10 +4,6 @@ teas = ["1. Green Tea", "2. Black Tea", "3. Oolong Tea", "4. White Tea", "5. Her
 for tea in teas:
     print(f"- {tea}")
 selected_tea = input("\nPlease select a tea by typing its number:")
-if selected_tea in teas:
-    print(f"You have selected {selected_tea}. Enjoy your tea!")
-else:
-    print("Sorry, we don't have that tea.")
     
 #making seleted tea
 
@@ -93,10 +89,5 @@ elif selected_tea == "5":
         print(f"You have selected {selected_herbal_tea}. Enjoy your tea!")
     else:
         print("Sorry, we don't have that type of Herbal Tea.")
-
 else:
     print("Sorry, we don't have that tea.")
-    
-
-
-
