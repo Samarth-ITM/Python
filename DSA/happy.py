@@ -9,7 +9,7 @@ if len(n) == 1 and n[0] == 1: #1 #1 #
 t = 0
 # n + 4
 
-while True: #n
+while True: #n n((n+1) + (1+n) + 3)) n(2n + 4)
     for i in n: #n 
         t += i**2 #1
         
@@ -22,3 +22,4 @@ while True: #n
         break #1
     t = 0
 
+#n^2 
