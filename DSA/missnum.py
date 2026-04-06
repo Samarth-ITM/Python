@@ -1,12 +1,13 @@
 def findDisappearedNumbers(nums):
-    nums = sorted(list(set((nums))))
+    nums = sorted(list(set((nums)))) #nlogn
     t = []
     print(nums)
     if nums[0] != 1:
         t.append(1)
     c = 0
     l = len(nums)
-    while c<=l:
+    l = max(nums)
+    while c<=l: #n *n
         if c+1 < len(nums) and nums[c]+1 != nums[c+1]:
             t.append(nums[c])
             t.append(nums[c]+1)
@@ -14,7 +15,7 @@ def findDisappearedNumbers(nums):
         else:
             t.append(c)
         c+= 1
-        if t[-1] == max(nums):
+        if t[-1] == l:
             break
     print(t)
         
