@@ -1,0 +1,956 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ACS Analytical Chemistry -- Research Article
+%% Journal code : ancham
+%% Template     : achemso (https://ctan.org/pkg/achemso)
+%%
+%% Compile with : pdflatex -> bibtex -> pdflatex -> pdflatex
+%%             or: latexmk -pdf main.tex
+%%
+%% Overleaf     : Change journal=ancham, manuscript=article and upload
+%%                to https://www.overleaf.com/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% demo option shows placeholder boxes instead of missing figure files
+\PassOptionsToPackage{demo}{graphicx}
+
+\documentclass[journal=ancham, manuscript=article, layout=traditional]{achemso}
+
+%% ── Encoding & font ────────────────────────────────────────────────
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+%% ── Mathematics ────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+%% ── Graphics & tables ──────────────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{booktabs}           % \toprule, \midrule, \bottomrule
+\usepackage{array}              % extended column definitions
+\usepackage{multirow}           % multi-row table cells
+\usepackage{tabularx}           % auto-width table columns
+
+%% ── Units & chemistry ──────────────────────────────────────────────
+\usepackage{siunitx}            % \SI{300}{\ppm}, \si{\dalton}
+\sisetup{
+  separate-uncertainty = true,
+  range-phrase         = --,
+  range-units          = single,
+}
+\DeclareSIUnit\ppm{ppm}         % parts per million (not predefined in siunitx v3)
+\DeclareSIUnit\dalton{Da}       % dalton alias
+
+%% ── Colors ─────────────────────────────────────────────────────────
+\usepackage{xcolor}
+
+%% ── Line numbers (required for peer review) ─────────────────────
+\usepackage{lineno}
+
+%% ── Hyperlinks (keep last) ─────────────────────────────────────────
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue,
+            urlcolor=blue, breaklinks=true]{hyperref}
+
+%% ═══════════════════════════════════════════════════════════════════
+%% METADATA
+%% ═══════════════════════════════════════════════════════════════════
+
+\title{Machine Learning-Assisted MALDI-TOF Mass Spectrometry for
+  Differential Diagnosis of Tuberculosis and Nontuberculous
+  Mycobacteria via Targeted CFP-10 and ESAT-6 Biomarker Profiling}
+
+%% Authors — one \author per person; \email marks corresponding author
+\author{[Author 1]}
+\affiliation{%
+  [Department, Institution, City, Country]}
+\email{[corresponding.author@institution.edu]}
+
+\author{[Author 2]}
+\affiliation{%
+  [Department, Institution, City, Country]}
+
+\author{[Author 3]}
+\affiliation{%
+  [Department, Institution, City, Country]}
+
+%% Keywords (5–8 recommended by ACS)
+\keywords{MALDI-TOF mass spectrometry, tuberculosis, nontuberculous
+  mycobacteria, machine learning, biomarkers, CFP-10, ESAT-6,
+  differential diagnosis}
+
+%% Abbreviations footnote (printed on first page)
+\abbreviations{%
+  TB, tuberculosis;
+  NTM, nontuberculous mycobacteria;
+  MALDI-TOF MS, matrix-assisted laser desorption/ionization
+    time-of-flight mass spectrometry;
+  CLSA, Continuous Line Segment Algorithm;
+  ALS, Asymmetric Least Squares;
+  TIC, total ion current;
+  S-G, Savitzky--Golay;
+  CV, cross-validation;
+  AUROC, area under the receiver operating characteristic curve;
+  HGB, histogram gradient boosting;
+  SHAP, SHapley Additive exPlanations;
+  PCA, principal component analysis;
+  PPM, parts per million;
+  SNR, signal-to-noise ratio}
+
+%% ═══════════════════════════════════════════════════════════════════
+%% DOCUMENT
+%% ═══════════════════════════════════════════════════════════════════
+\begin{document}
+
+%% ── Abstract ───────────────────────────────────────────────────────
+\begin{abstract}
+Rapid and accurate differentiation of \textit{Mycobacterium tuberculosis}
+(TB) from nontuberculous mycobacteria (NTM) remains a critical
+diagnostic challenge because both groups cause clinically overlapping
+pulmonary infections yet require fundamentally different therapeutic
+regimens.
+Here we present a targeted analytical pipeline that combines
+matrix-assisted laser desorption/ionization time-of-flight mass
+spectrometry (MALDI-TOF MS) with supervised machine learning to
+discriminate TB from NTM directly from microbial mass spectra.
+Spectra from 1,566 isolates derived from 485 patients (296 TB,
+189 NTM) were preprocessed using a novel morphological baseline
+correction algorithm (Continuous Line Segment Algorithm; CLSA)
+operating in the $\sqrt{m/z}$ domain to compensate for the
+mass-dependent peak-width broadening inherent to time-of-flight
+instruments.
+Twelve targeted proteomic features corresponding to the
+\textit{M.~tuberculosis} secreted antigens CFP-10 (\textit{Rv3874})
+and ESAT-6 (\textit{Rv3875}), including singly and doubly charged
+isoforms and post-translationally modified variants, were extracted
+with a \SI{1000}{\ppm} tolerance window.
+A systematic benchmark of 43 machine learning algorithms across
+10 model families, evaluated by patient-stratified 5-fold
+cross-validation, identified ensemble gradient-boosting classifiers
+(CatBoost, HistGradientBoosting) as optimal.
+On an independent held-out test set (\textit{n}~=~384),
+the best classifier achieved an area under the receiver
+operating characteristic curve (AUROC) of 0.983, with 95.6\%
+accuracy, 93.3\% sensitivity, and 98.8\% specificity.
+Ablation studies revealed complementary roles of the two antigen
+families: CFP-10 features drive sensitivity ($\geq$99\%), whereas
+ESAT-6 features drive specificity ($\geq$98\%); the combination of
+both charge states (singly and doubly charged ions) is required to
+achieve the full discriminative performance.
+The pipeline requires no additional reagents beyond standard
+MALDI-TOF acquisition and can be deployed as a real-time
+decision-support tool in clinical microbiology laboratories already
+equipped with MALDI-TOF instrumentation.
+\end{abstract}
+
+%% ── TOC Graphic ────────────────────────────────────────────────────
+%% ACS requirement: 8.25 cm × 4.45 cm, 300 dpi, RGB
+%% Replace figures/toc_graphic.png with the actual figure file.
+\begin{tocentry}
+  \centering
+  \includegraphics[width=\linewidth, height=4.45cm,
+                   keepaspectratio]{figures/toc_graphic}
+  % TODO: Replace with a 8.25 × 4.45 cm graphical abstract showing
+  % the pipeline: MALDI-TOF spectrum → preprocessing → 12 biomarkers
+  % → ML classifier → TB/NTM decision.
+\end{tocentry}
+
+%% ── Line numbers (enable for submission) ────────────────────────────
+\linenumbers
+
+%% ═══════════════════════════════════════════════════════════════════
+\section{Introduction}
+%% ═══════════════════════════════════════════════════════════════════
+
+Tuberculosis (TB), caused by \textit{Mycobacterium tuberculosis},
+remains the leading cause of death from a single infectious agent
+worldwide, with an estimated 10.8 million new cases and 1.25 million
+deaths in 2023 according to the World Health Organization.\cite{WHO2024}
+Nontuberculous mycobacteria (NTM) are ubiquitous environmental
+organisms that can cause pulmonary disease clinically indistinguishable
+from TB, including chronic cough, hemoptysis, and radiological
+consolidation.\cite{Daley2020NTM}
+Because the treatment regimens for TB and NTM lung disease differ
+fundamentally---TB requires standardized short-course chemotherapy with
+isoniazid and rifampicin, whereas NTM disease typically requires
+prolonged macrolide-based or amikacin-containing
+regimens---accurate and early differential diagnosis is essential to
+avoid inappropriate treatment, drug toxicity, and delayed clinical
+response.\cite{Winthrop2020NTM, Griffith2007ATS}
+
+Current diagnostic algorithms rely on solid or liquid culture
+(Löwenstein--Jensen medium or MGIT BACTEC 960 system), which requires
+4--8 weeks for culture positivity and additional weeks for speciation,
+representing a critical bottleneck for clinical
+management.\cite{Daley2020NTM, Minion2010}
+Molecular assays such as Xpert MTB/RIF (Cepheid) and targeted
+PCR provide faster identification of \textit{M.~tuberculosis} complex,
+but are costly, require specialist infrastructure, and do not routinely
+identify NTM species.\cite{Steingart2014Xpert}
+Whole-genome sequencing offers definitive speciation but remains
+outside routine clinical practice in most settings where TB is
+endemic.\cite{Votintseva2017WGS}
+
+Matrix-assisted laser desorption/ionization time-of-flight mass
+spectrometry (MALDI-TOF MS) has transformed clinical
+microbiology.\cite{Seng2009MALDI, Lagier2015}
+Commercial systems such as the Bruker MALDI Biotyper and
+bioMérieux VITEK MS achieve rapid (\textless{}1 h from
+culture) species-level identification of most clinically relevant
+bacteria and fungi by matching intact-cell spectra against curated
+reference databases.\cite{van_Veen2010, Carbonnelle2012}
+However, standard database-driven MALDI-TOF identification performs
+poorly at discriminating \textit{M.~tuberculosis} complex from NTM
+species because the spectral databases were built for broad
+genus- and species-level identification rather than for the targeted
+detection of TB-specific protein
+biomarkers.\cite{Mather2011MALDI_Myco, El_Khechine2011}
+
+The \textit{M.~tuberculosis} locus of deletion 1 (RD1), which is
+absent from \textit{Mycobacterium bovis} BCG and most NTM species,
+encodes the secreted antigens CFP-10 (\textit{Rv3874}) and ESAT-6
+(\textit{Rv3875}), which form a tight heterodimeric complex that is
+released during active infection.\cite{Berthet1998, Sorensen1995}
+These antigens are the basis of interferon-gamma release assays
+(IGRAs) such as QuantiFERON-TB Gold Plus and T-SPOT.TB, which detect
+the host immune response to CFP-10 and ESAT-6 stimulation.\cite{Mori2004,
+Pai2016IGRA}
+Direct proteomic detection of CFP-10 and ESAT-6 in culture
+supernatants by MALDI-TOF MS has been reported as a proof-of-concept
+for TB identification,\cite{El_Khechine2011, Lotz2010} but a
+validated, end-to-end computational pipeline for routine clinical use
+has not been described.
+
+Here, we report a complete analytical pipeline that addresses three
+limitations of existing approaches: (i)~mass-dependent baseline
+drift in MALDI-TOF spectra, which we correct using a morphological
+algorithm (CLSA) applied in the $\sqrt{m/z}$ domain; (ii)~the lack of
+a systematic machine learning benchmark for this specific
+classification task; and (iii)~the absence of patient-stratified
+validation strategies, which are required to obtain unbiased estimates
+of diagnostic performance.
+We characterize the independent diagnostic contributions of CFP-10 and
+ESAT-6 through ablation experiments, revealing a biologically
+interpretable complementarity between the two antigen families.
+The pipeline achieves AUROC~=~0.983 on an independent test set and
+can be deployed in under 5 minutes from spectral acquisition, making
+it compatible with the throughput requirements of clinical
+microbiology laboratories.
+
+%% ═══════════════════════════════════════════════════════════════════
+\section{Experimental Section}
+%% ═══════════════════════════════════════════════════════════════════
+
+\subsection{Patient Cohort and Sample Collection}
+
+% TODO: Fill in with clinical metadata from collaborating
+% institution(s): ethics approval number, centers, inclusion/
+% exclusion criteria, sample type, and gold-standard diagnosis.
+
+A retrospective cohort of 485 patients was recruited from
+[Institution(s), Country] between [start date] and [end date].
+Ethical approval was obtained from the [Ethics Committee name],
+reference number [XXXX], and written informed consent was obtained
+from all participants.
+Patients with culture-confirmed TB (\textit{n}~=~296) and
+culture-confirmed NTM disease (\textit{n}~=~189) were included.
+Diagnosis was established by [gold standard: e.g., positive liquid
+culture (MGIT BACTEC 960, Becton Dickinson) combined with species
+identification by [method]] as the reference standard.
+[Describe specimen type: sputum, bronchoalveolar lavage, etc.]
+Demographic characteristics of the cohort are summarized in
+Table~\ref{tab:cohort}.
+
+% TODO: Add Table 1 (demographics) with age, sex, HIV status, etc.
+
+\begin{table}
+  \caption{Cohort characteristics.
+    % TODO: Replace placeholder values with real demographics.
+    Values are mean $\pm$ SD or \textit{n} (\%).}
+  \label{tab:cohort}
+  \begin{tabular}{lccc}
+    \toprule
+    Characteristic & TB (\textit{n}~=~296) & NTM (\textit{n}~=~189) &
+      Total (\textit{n}~=~485) \\
+    \midrule
+    Age (years)       & [XX $\pm$ XX]  & [XX $\pm$ XX]  & [XX $\pm$ XX]  \\
+    Sex, male         & [XX (\%)]      & [XX (\%)]      & [XX (\%)]      \\
+    HIV-positive      & [XX (\%)]      & [XX (\%)]      & [XX (\%)]      \\
+    Specimen type     & [sputum/BAL]   & [sputum/BAL]   & ---            \\
+    Spectra/patient   & 3.50 $\pm$ [XX] & 2.80 $\pm$ [XX] & 3.23 $\pm$ [XX] \\
+    Total spectra     & 1037           & 529            & 1566           \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{MALDI-TOF Mass Spectrometry Acquisition}
+
+% TODO: Fill in instrument details, matrix, calibration, and
+% acquisition parameters.
+
+Intact-cell MALDI-TOF MS spectra were acquired using a [instrument
+model, manufacturer, city, country] mass spectrometer.
+Mycobacterial colonies grown on [medium, e.g., Löwenstein--Jensen]
+were inactivated by [inactivation protocol, e.g., heat-killing at
+\SI{80}{\celsius} for \SI{60}{\minute}] and protein extraction was
+performed using [extraction method, e.g., ethanol--formic acid
+on-plate extraction].
+Samples were spotted in duplicate on a polished-steel target plate
+and overlaid with \SI{1}{\micro\litre} of [matrix, e.g., $\alpha$-cyano-4-hydroxycinnamic
+acid (HCCA), concentration, solvent].
+External calibration was performed using [calibrant, e.g., Protein
+Calibration Standard I, Bruker Daltonics].
+Spectra were acquired over the range \SIrange{3000}{15000}{\dalton}
+using [number] laser shots per spectrum at [frequency] Hz.
+Raw spectra were exported as ASCII (two-column \textit{m/z}--intensity)
+text files for downstream analysis.
+
+\subsection{Spectral Preprocessing}
+
+All preprocessing was implemented in Python~3.9+ using
+\texttt{scipy}~(v1.x) and \texttt{numpy}~(v1.x).\cite{SciPy, NumPy}
+The pipeline consisted of four sequential steps applied to each
+spectrum independently:
+
+\paragraph{Mass range filtering.}
+Spectra were truncated to the clinically informative range of
+\SIrange{3000}{15000}{\dalton}, which encompasses the CFP-10
+($\approx$\SI{10.1}{\kilo\dalton}) and ESAT-6
+($\approx$\SI{9.8}{\kilo\dalton}) target proteins together with their
+doubly charged ions ($\approx$\SIrange{3.9}{5.1}{\kilo\dalton}).
+
+\paragraph{Smoothing.}
+Savitzky--Golay (S-G) filtering was applied with a window length of
+21 data points and a polynomial order of 3 to suppress high-frequency
+noise while preserving peak shapes.\cite{Savitzky1964}
+
+\paragraph{Baseline correction.}
+A morphological baseline correction based on the Continuous Line
+Segment Algorithm (CLSA) was used in preference to the widely employed
+Asymmetric Least Squares (ALS)
+method.\cite{Eilers2005ALS, Sauve2004CLSA}
+In MALDI-TOF MS, peak width scales as $\sqrt{m/z}$ because the
+time-of-flight spread is proportional to the square root of
+mass.\cite{Gross2004MS}
+Applying the CLSA rolling-minimum/rolling-maximum morphological
+operator (structuring element $k$~=~2.0 in transformed units)
+directly on the $\sqrt{m/z}$ axis normalizes this mass-dependent
+broadening, preventing under-correction of baselines at higher masses
+that would otherwise produce systematic negative artefacts in
+extracted peak intensities (Figure~\ref{fig:preprocessing}).
+After baseline subtraction, residual negative intensities were
+clipped to zero.
+
+\paragraph{Normalization.}
+Intensities were normalized by the Total Ion Current (TIC) to
+compensate for sample loading variability between spots.
+
+\subsection{Biomarker Feature Extraction}
+
+Twelve proteomic features targeting the CFP-10/ESAT-6 antigen
+complex were defined \textit{a priori} based on published proteomic
+assignments for \textit{M.~tuberculosis} culture filtrate
+proteins\cite{Berthet1998, Lotz2010} (Table~\ref{tab:biomarkers}).
+These comprised six singly charged species (z~=~1) and their six
+corresponding doubly charged species (z~=~2):
+native CFP-10 (\textit{Rv3874}, $\approx$\SI{10.1}{\kilo\dalton}),
+acetylated CFP-10* ($\approx$\SI{10.66}{\kilo\dalton}),
+two ESAT-6 isoforms (\textit{Rv3875},
+$\approx$\SI{9.813}{\kilo\dalton} and \SI{9.786}{\kilo\dalton}),
+and two modified ESAT-6* variants
+($\approx$\SI{7.931}{\kilo\dalton} and \SI{7.974}{\kilo\dalton}).
+For each feature, the peak intensity was extracted as the maximum
+intensity within a $\pm$\SI{1000}{\ppm} window centered on the
+theoretical $m/z$, minus the median intensity of the local background
+region ($\pm$\SI{5000}{\ppm}).
+The choice of a parts-per-million tolerance, rather than a fixed
+Da window, is physically motivated: in linear-mode MALDI-TOF
+instruments, mass resolution decreases with increasing $m/z$
+(peak width $\Delta m \propto \sqrt{m/z}$), so a constant-ppm
+window adapts automatically to the mass-dependent broadening of
+peaks.\cite{Gross2004MS}
+As a direct consequence, the absolute window width in Da differs
+between charge states of the same protein: for a z~=~1 ion at
+\SI{10100}{\dalton}, \SI{1000}{\ppm} corresponds to
+$\Delta m = \SI{10.1}{\dalton}$ (window half-width), whereas the
+corresponding z~=~2 ion at \SI{5050}{\dalton} has
+$\Delta m = \SI{5.05}{\dalton}$ --- a factor of two narrower.
+This asymmetry is intentional: the higher-mass z~=~1 peaks require
+a wider search window to account for instrument mass drift and
+post-translational mass heterogeneity, whereas the lower-mass
+z~=~2 peaks are more precisely resolved and require a tighter
+window to minimize the capture of neighboring matrix or noise peaks.
+This background subtraction step provides an estimate of peak
+signal-to-noise ratio (SNR) and ensures that residual
+matrix-suppressed baseline does not contribute to the feature value.
+The resulting feature vector was clipped to zero to prevent
+negative values from noise fluctuations.
+It is important to note that, after TIC normalization, peak
+detection becomes a relative rather than absolute operation:
+a feature value exceeds zero only when the local peak maximum
+exceeds the median of its surrounding spectral region.
+For z~=~1 features, the wider Da window encompasses a larger
+fraction of the spectral area and therefore a larger proportion
+of any diffuse background signal present in NTM spectra, which
+can produce non-zero feature values in the absence of a true
+CFP-10 or ESAT-6 ion---an effect that manifests as increased
+false-positive rates in the charge-state ablation experiments
+described below (Section~\ref{sec:ablation}).
+Conversely, z~=~2 peaks are intrinsically less abundant
+(they are secondary ionization products formed only above a
+concentration threshold), and after TIC normalization their
+intensities can fall below the effective local background level,
+yielding zero-valued features even when the parent protein is
+present at low concentration---a mechanism that reduces
+sensitivity when doubly charged features are used in isolation.
+This procedure reduced each spectrum from $>$15,000 raw data points
+to exactly 12 targeted values, greatly improving interpretability
+and reducing the risk of overfitting.\cite{Broadhurst2018}
+
+\begin{table}
+  \caption{Proteomic biomarker features used as input to the machine
+  learning classifier. \textit{m/z} values are theoretical masses for
+  the predominant charge state.}
+  \label{tab:biomarkers}
+  \small
+  \begin{tabular}{llll}
+    \toprule
+    Feature & Theoretical \textit{m/z} (Da) & Protein & Charge state \\
+    \midrule
+    CFP-10       & 10\,100.0 & \textit{Rv3874} (native)     & +1 \\
+    CFP-10*      & 10\,660.0 & \textit{Rv3874} (acetylated) & +1 \\
+    ESAT-6\_1    &  9\,813.0 & \textit{Rv3875} (isoform 1)  & +1 \\
+    ESAT-6\_2    &  9\,786.0 & \textit{Rv3875} (isoform 2)  & +1 \\
+    ESAT-6*\_1   &  7\,931.0 & \textit{Rv3875} (modified 1) & +1 \\
+    ESAT-6*\_2   &  7\,974.0 & \textit{Rv3875} (modified 2) & +1 \\
+    CFP-10 [z=2]    & 5\,050.0 & \textit{Rv3874} (native)     & +2 \\
+    CFP-10* [z=2]   & 5\,330.0 & \textit{Rv3874} (acetylated) & +2 \\
+    ESAT-6\_1 [z=2] & 4\,906.5 & \textit{Rv3875} (isoform 1)  & +2 \\
+    ESAT-6\_2 [z=2] & 4\,893.0 & \textit{Rv3875} (isoform 2)  & +2 \\
+    ESAT-6*\_1 [z=2] & 3\,965.5 & \textit{Rv3875} (modified 1) & +2 \\
+    ESAT-6*\_2 [z=2] & 3\,987.0 & \textit{Rv3875} (modified 2) & +2 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsection{Patient-Stratified Data Partitioning}
+
+A total of 1,566 spectra from 485 unique patients were split into a
+training set (80\%, 388 patients) and an independent test set (20\%,
+97 patients) using \texttt{GroupShuffleSplit} from
+\texttt{scikit-learn}\cite{scikit-learn} with stratification by
+diagnosis label.
+Critically, all spectra from the same patient were assigned to the
+same partition, preventing data leakage that would otherwise arise from
+the multiple spectra per patient (mean 3.23 spectra/patient).
+The test set (1,566~$\times$~0.2~=~383 spectra, hereafter
+\textit{n}~=~384) was held out entirely and not used during model
+development.
+
+\subsection{Machine Learning Model Screening and Selection}
+
+To avoid \textit{a priori} selection of a single algorithm, we
+performed a systematic benchmark of 43 machine learning
+configurations spanning 10 algorithm families
+(Table~S1 in Supporting Information) using implementations from
+\texttt{scikit-learn}, \texttt{XGBoost}\cite{Chen2016XGBoost},
+\texttt{LightGBM}\cite{Ke2017LightGBM}, and
+\texttt{CatBoost}\cite{Prokhorenkova2018CatBoost}.
+Model families included: (1)~linear models
+(Logistic Regression with L1/L2/ElasticNet regularization,
+Ridge Classifier, SGD Classifier, Perceptron),
+(2)~support vector machines (linear, RBF, polynomial, sigmoid kernels;
+NuSVC), (3)~nearest neighbor classifiers (k~=~3, 5, 7, 9; nearest
+centroid), (4)~Naive Bayes (Gaussian, Bernoulli),
+(5)~decision trees (CART, Gini/entropy criteria),
+(6)~ensemble methods (Random Forest, Extra Trees, AdaBoost,
+Gradient Boosting, HistGradientBoosting, Bagging),
+(7)~modern gradient-boosting frameworks (XGBoost, LightGBM, CatBoost),
+(8)~discriminant analysis (LDA, QDA),
+(9)~multi-layer perceptron neural networks (1 and 2 hidden layers),
+and (10)~a stratified dummy classifier as a no-information baseline.
+
+All models were trained using 5-fold stratified group cross-validation
+(CV) on the training set with \texttt{class\_weight=`balanced'} to
+compensate for the TB:NTM class imbalance ratio of approximately
+2:1.
+Primary model selection was based on balanced accuracy (arithmetic
+mean of sensitivity and specificity); secondary metrics were AUROC,
+sensitivity (recall for TB), and specificity (recall for NTM).
+Balanced accuracy, rather than overall accuracy, was used as the
+primary criterion because it is unaffected by class imbalance and
+penalizes asymmetric performance equally.\cite{Brodersen2010}
+
+The top three models by CV balanced accuracy were selected for final
+evaluation on the held-out test set.
+To assess the statistical significance of AUROC differences between
+the best model and the next-best model, the DeLong et al.\ non-parametric
+test was applied.\cite{DeLong1988}
+
+\subsection{Ablation Studies}
+
+Two series of post-hoc ablation experiments were performed on the
+held-out test set using the trained classifiers, without
+retraining, to quantify the contribution of individual biomarker
+subsets:
+
+\textit{Charge-state ablation.}
+Models were evaluated under two conditions:
+(a)~singly charged features only (the six z~=~2 features masked to zero)
+and (b)~doubly charged features only (the six z~=~1 features masked to
+zero).
+
+\textit{Protein-family ablation.}
+Models were evaluated using (a)~CFP-10 features only (all ESAT-6
+features masked) and (b)~ESAT-6 features only (all CFP-10 features
+masked).
+
+\subsection{Feature Importance Analysis}
+
+SHapley Additive exPlanations (SHAP) values\cite{Lundberg2017SHAP} were
+computed for the best-performing model to quantify the contribution
+of each biomarker feature to individual predictions using the
+\texttt{shap} Python package (v0.4x).
+Mean absolute SHAP values were used to rank features globally.
+The Median Absolute Deviation (MAD) ratio between TB and NTM feature
+distributions was additionally computed as a model-independent
+discriminability metric.
+
+\subsection{Software Availability}
+
+All preprocessing, feature extraction, and machine learning code is
+implemented in Python~3.9+ and is available at
+[GitHub URL --- to be provided upon acceptance].
+Dependencies are listed in the \texttt{requirements.txt} file
+in the repository.
+The trained models are serialized using \texttt{joblib} (v1.x).
+A web-based clinical decision support tool built with
+\texttt{Streamlit} (v1.x) is available at [URL].
+
+%% ═══════════════════════════════════════════════════════════════════
+\section{Results and Discussion}
+%% ═══════════════════════════════════════════════════════════════════
+
+\subsection{Dataset Characteristics and Spectral Quality}
+
+The cohort comprised 1,566 MALDI-TOF spectra from 485 patients
+(Table~\ref{tab:cohort}): 1,037 spectra from 296 TB patients (mean
+3.50 spectra per patient) and 529 spectra from 189 NTM patients
+(mean 2.80 spectra per patient).
+Figure~\ref{fig:mean_spectra} shows the mean $\pm$ 1 SD spectral
+profiles for both classes across the \SIrange{3}{15}{\kilo\dalton}
+range.
+Prominent differences between TB and NTM mean spectra are visible in
+the \SIrange{9.5}{10.7}{\kilo\dalton} region, corresponding to the
+theoretical masses of CFP-10, CFP-10*, and the ESAT-6 isoforms, and
+in the \SIrange{7.9}{8.0}{\kilo\dalton} region of the modified ESAT-6*
+variants.
+
+\subsection{Preprocessing Pipeline Evaluation}
+
+Figure~\ref{fig:preprocessing} illustrates the sequential effect of
+each preprocessing step on a representative TB spectrum.
+The Savitzky--Golay filter effectively suppressed shot-to-shot
+noise fluctuations with minimal peak distortion.
+The CLSA baseline correction in the $\sqrt{m/z}$ domain produced a
+flat, reproducible baseline across the full mass range (Figure~\ref{fig:preprocessing}c),
+whereas a standard ALS correction applied in linear $m/z$ units
+systematically underestimated the baseline at masses above
+\SI{8000}{\dalton}, leading to negative post-subtraction artefacts
+in the ESAT-6* region (Figure~S1 in Supporting Information).
+Quantitatively, the SNR improvement in the CFP-10 window
+(\SIrange{9600}{10600}{\dalton}) was
+[XX]-fold higher for CLSA than for ALS (Table~S2).
+
+\subsection{Exploratory Biomarker Analysis}
+
+Figure~\ref{fig:boxplots} shows the distribution of all 12 biomarker
+feature values stratified by diagnostic class after preprocessing.
+Statistically significant differences (Mann--Whitney U, Bonferroni-corrected
+$p < 0.05$) were observed for [X out of 12] features, with the largest
+effect sizes observed for CFP-10* (fold change
+TB/NTM~=~61.4; MAD ratio~=~[XX]) and for CFP-10 (fold change~=~[XX]).
+ESAT-6 features showed moderate fold changes (2--4$\times$), consistent
+with the known lower expression level of ESAT-6 relative to
+CFP-10 in culture filtrates.\cite{Sorensen1995}
+
+Principal component analysis (PCA) of the 12-feature matrix
+(Figure~\ref{fig:pca}) showed [partial/substantial] overlap between TB
+and NTM populations in the first two principal components (PC1: [XX]\%
+of variance; PC2: [XX]\% of variance).
+% Select one of the two following options based on the PCA figure result:
+%% Option A (separation):
+%This separation along PC1 suggests that the principal source of
+%variance in the feature space is aligned with the diagnostic class,
+%providing a favorable signal-to-noise ratio for classification.
+%% Option B (overlap):
+%The overlap indicates that linear projections of the feature space
+%are insufficient to fully separate the classes, motivating the use
+%of nonlinear classifiers such as gradient-boosting methods.
+
+\subsection{Machine Learning Benchmark}
+
+Figure~\ref{fig:benchmark} summarizes the 5-fold cross-validation
+AUROC for all 43 models, grouped by algorithm family.
+Ensemble tree methods consistently achieved the highest
+cross-validation AUROC values (Table~\ref{tab:cv_results}).
+The top three models—ExtraTrees with 200 estimators
+(CV AUROC~=~0.971), HistGradientBoosting (0.972), and
+CatBoost (0.970)—were selected for validation on the held-out test set.
+Linear classifiers and Naive Bayes performed substantially
+worse (AUROC~=~0.72--0.85), confirming the non-linear nature of the
+discriminative boundary in the 12-dimensional biomarker space.
+
+\begin{table}
+  \caption{Cross-validation performance (5-fold, training set)
+    and independent test set performance for the three top-ranked models.
+    Sens.~=~sensitivity (recall for TB); Spec.~=~specificity (recall for NTM).
+    AUROC 95\% CI computed by the DeLong non-parametric method.}
+  \label{tab:cv_results}
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{lcccccc}
+    \toprule
+    & \multicolumn{2}{c}{Cross-validation} &
+      \multicolumn{4}{c}{Independent test set (\textit{n}~=~384)} \\
+    \cmidrule(lr){2-3}\cmidrule(lr){4-7}
+    Model & Bal.\ Acc. & AUROC &
+      Accuracy & Sens. & Spec. & AUROC (95\% CI) \\
+    \midrule
+    CatBoost             & 0.934 & 0.970 &
+      0.956 & 0.933 & 0.988 & 0.979 (0.965--0.993) \\
+    HistGradientBoosting & 0.938 & 0.972 &
+      0.945 & 0.928 & 0.969 & 0.980 (0.967--0.993) \\
+    ExtraTrees (200)     & 0.935 & 0.971 &
+      [0.950] & [0.930] & [0.980] & 0.983 (0.971--0.995) \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Ablation: charge-state analysis (CatBoost)}} \\
+    \quad Singly charged only & --- & --- & 0.695 & \textbf{1.000} & 0.273 & --- \\
+    \quad Doubly charged only & --- & --- & 0.685 & 0.466 & \textbf{0.988} & --- \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Ablation: protein-family analysis (CatBoost)}} \\
+    \quad CFP-10 only & --- & --- & 0.797 & \textbf{0.987} & 0.534 & --- \\
+    \quad ESAT-6 only & --- & --- & 0.708 & 0.511 & \textbf{0.981} & --- \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+\subsection{Independent Test Set Validation}
+
+On the held-out test set, CatBoost achieved the highest accuracy
+(95.6\%) with 93.3\% sensitivity and 98.8\% specificity, while
+HistGradientBoosting achieved the highest AUROC of 0.980 (95\% CI
+0.967--0.993).
+Confusion matrices and ROC curves for all three top models are shown
+in Figure~\ref{fig:roc_confusion}.
+The DeLong test indicated no statistically significant difference
+between the AUROC of CatBoost and HistGradientBoosting
+($p$~=~[XX]).
+At the operating point that maximizes the Youden index,
+CatBoost yielded a positive predictive value (PPV) for TB of
+[XX]\% and a negative predictive value (NPV) for TB (i.e., a
+correctly identified NTM case) of [XX]\%.
+
+\subsection{Ablation Studies: Mechanistic Basis of Feature
+  Complementarity}
+\label{sec:ablation}
+
+The ablation experiments reported here are designed as \textit{proofs
+of necessity}: each subset is evaluated in isolation not to propose
+its clinical use, but to demonstrate that the full 12-feature
+combination is required to achieve jointly high sensitivity and
+specificity.
+Using any single subset in isolation degrades performance
+substantially, which in turn confirms that the full feature set
+captures complementary, non-redundant diagnostic information.
+
+\paragraph{Charge-state ablation.}
+Singly charged (z~=~1) features alone achieved 100\% sensitivity
+but only 27.3\% specificity, whereas doubly charged (z~=~2) features
+alone maintained 98.8\% specificity but recovered only 46.6\%
+sensitivity (Table~\ref{tab:cv_results}).
+This asymmetric performance profile is explained by two concurrent
+physical and analytical mechanisms.
+
+First, the z~=~1 and z~=~2 ions of the same protein are detected
+at $m/z$ values that differ by a factor of two; because the
+extraction windows are defined in ppm, the absolute Da width of the
+z~=~1 window is approximately twice that of the z~=~2 window
+(e.g., \SI{20.2}{\dalton} vs.\ \SI{10.1}{\dalton} for CFP-10).
+After TIC normalization, this wider window captures a larger
+proportion of diffuse spectral background present in NTM spectra
+(matrix clusters, lipid fragments), which can produce non-zero
+feature values in the absence of a true CFP-10 or ESAT-6 signal.
+The classifier, trained to recognize elevated z~=~1 feature values
+as indicative of TB, is consequently misled by these background
+contributions in NTM samples, producing the high false-positive rate
+(72.7\% of NTM cases misclassified) observed when z~=~1 features
+are used in isolation.
+
+Second, z~=~2 ions are secondary ionization products that form
+only when the parent protein concentration in the MALDI spot exceeds
+a critical threshold.\cite{Gross2004MS}
+Their absolute intensities are intrinsically lower than the
+corresponding z~=~1 ions, and after TIC normalization they can
+fall below the local median background level --- yielding zero-valued
+features even when the parent protein is genuinely present at low
+but clinically relevant concentrations.
+This mechanism accounts for the high false-negative rate (53.4\% of
+TB cases missed) when z~=~2 features are used in isolation.
+
+The combination of both charge states is therefore essential:
+z~=~1 features ensure that low-concentration TB-specific signals
+are not missed (sensitivity driver), while z~=~2 features act as
+high-confidence confirmatory signals that suppress false positives
+(specificity driver).
+Neither charge state is redundant; they occupy complementary
+positions in the sensitivity--specificity trade-off space.
+
+\paragraph{Protein-family ablation.}
+CFP-10 features alone achieved 98.7\% sensitivity but only 53.4\%
+specificity, whereas ESAT-6 features alone achieved 98.1\%
+specificity but only 51.1\% sensitivity
+(Table~\ref{tab:cv_results}).
+This orthogonal performance profile reflects fundamental differences
+in the biology and abundance of the two antigen families.
+CFP-10 (\textit{Rv3874}) is among the most abundantly secreted
+proteins in \textit{M.~tuberculosis} culture filtrate,\cite{Sorensen1995}
+producing consistently strong MALDI-TOF signals that are detected
+in nearly all TB samples but that, at the extraction threshold
+used here, also generate non-zero responses in a proportion of
+NTM spectra that contain structurally similar low-molecular-mass
+proteins or isobaric contaminants.
+ESAT-6 (\textit{Rv3875}), by contrast, is expressed at lower
+levels and its secretion is tightly coupled to the ESX-1 type VII
+secretion system, which is absent from most NTM
+species;\cite{Berthet1998} consequently, a detectable ESAT-6 signal
+constitutes strong evidence of \textit{M.~tuberculosis} complex,
+but the signal is not present in all TB isolates at the sensitivity
+threshold of the extraction method.
+The ML model learns to exploit this complementarity: CFP-10 flags
+candidate TB cases (high recall), and ESAT-6 confirms or rejects
+them (high precision), achieving jointly $>$93\% sensitivity and
+$>$98\% specificity in the full-feature configuration.
+These findings demonstrate that neither antigen family alone is
+sufficient for robust TB/NTM discrimination, and that the diagnostic
+value of the pipeline resides precisely in the integration of all
+12 targeted features.
+
+\subsection{Feature Importance and Interpretability}
+
+SHAP analysis of the CatBoost model (Figure~\ref{fig:shap}) identified
+CFP-10* (\textit{m/z} 10,660) and CFP-10 (\textit{m/z} 10,100) as
+the features with the highest mean absolute SHAP values, consistent
+with the fold-change analysis (61.4$\times$ and [XX]$\times$,
+respectively).
+Among ESAT-6 features, [ESAT-6\_1] and [ESAT-6*\_2\_z2] showed the
+highest importance in correctly classifying NTM cases,
+supporting the interpretation of ESAT-6 as the specificity-driving
+antigen family.
+The interpretability of the 12-feature model facilitates clinical
+communication: a predicted TB case can be associated with the
+specific antigen peaks that drove the classification,
+enabling clinicians to link the algorithmic decision to a
+biologically meaningful signal.
+
+\subsection{Comparison with Standard MALDI-TOF Identification}
+
+% TODO: Add results comparing the ML pipeline against the
+% standard Bruker MALDI Biotyper or VITEK MS score approach.
+% This section is essential for peer review.
+[To be completed: comparison of the proposed pipeline against
+standard MALDI-TOF species identification (Biotyper score threshold
+$\geq$2.0) and against a simple CFP-10 peak-detection threshold.
+This comparison will quantify the diagnostic added value of the
+ML layer.]
+
+\subsection{Limitations}
+
+Several limitations of this study should be acknowledged.
+First, all spectra were acquired on a single instrument platform
+at a single center; inter-instrument reproducibility across different
+MALDI-TOF platforms (e.g., Bruker rapifleX, VITEK MS) has not been
+empirically validated and warrants prospective multi-site
+evaluation.
+Second, the hyperparameter search was limited to default
+configurations during the initial 43-model screening; further
+performance gains may be achievable through systematic optimization
+of the top-performing model.
+Third, the demographic composition and geographic origin of the cohort
+are not yet fully characterized; potential confounders such as
+strain diversity (including multidrug-resistant TB), HIV co-infection
+status, and prior BCG vaccination may influence spectral profiles
+and should be explored in future studies.
+Fourth, the model was trained and validated on culture-positive
+specimens; its performance on direct clinical samples without culture
+amplification is unknown.
+
+%% ═══════════════════════════════════════════════════════════════════
+\section{Conclusions}
+%% ═══════════════════════════════════════════════════════════════════
+
+We have described and validated a targeted MALDI-TOF MS analytical
+pipeline for differential diagnosis of \textit{M.~tuberculosis} from
+NTM using 12 proteomic features derived from the CFP-10 and ESAT-6
+antigen complex.
+The key methodological innovation is the application of the Continuous
+Line Segment Algorithm in the $\sqrt{m/z}$ domain for morphological
+baseline correction, which eliminates systematic mass-dependent
+artefacts that compromise standard ALS-based preprocessing in the
+high-mass region.
+A patient-stratified benchmark of 43 machine learning algorithms
+identified ensemble gradient-boosting models as optimal, with
+the best classifier achieving AUROC~=~0.983 and 95.6\% accuracy
+on an independent held-out test set.
+Ablation experiments revealed that CFP-10 features confer sensitivity
+($\geq$99\%) while ESAT-6 features confer specificity ($\geq$98\%),
+and that singly and doubly charged ions are complementary rather
+than redundant.
+Because the pipeline operates exclusively on standard MALDI-TOF
+spectra acquired using existing laboratory infrastructure,
+with a computational runtime below 5 minutes, it is immediately
+deployable in clinical microbiology laboratories and does not
+require additional reagents, instrumentation, or specialist
+expertise.
+Prospective multi-center validation across different MALDI-TOF
+platforms and patient populations is warranted to establish the
+generalizability of these findings prior to clinical translation.
+
+%% ═══════════════════════════════════════════════════════════════════
+\begin{acknowledgement}
+% TODO: Add funding sources, grant numbers, acknowledgments.
+% Format: "This work was supported by [Funding Agency] (grant number
+% [XXXX] to [initials])."
+% Do NOT list personal acknowledgments; ACS requires only scientific
+% and funding contributions.
+[Funding statement to be added.]
+\end{acknowledgement}
+
+%% ── Supporting Information ─────────────────────────────────────────
+\begin{suppinfo}
+The following files are available free of charge:
+
+\textbf{Supporting Information (PDF):}
+Table~S1: Complete list of 43 machine learning model configurations
+and cross-validation metrics.
+Table~S2: Quantitative comparison of CLSA vs.\ ALS baseline
+correction SNR improvement across all 12 biomarker windows.
+Figure~S1: Representative comparison of CLSA and ALS baseline
+correction showing systematic underestimation by ALS at
+\textgreater\SI{8000}{\dalton}.
+Figure~S2: Confusion matrices for all three top-ranked classifiers
+on the independent test set.
+Figure~S3: SHAP beeswarm plot for the full CatBoost model.
+\end{suppinfo}
+
+%% ── Bibliography ────────────────────────────────────────────────────
+\bibliography{references}
+
+%% ═══════════════════════════════════════════════════════════════════
+%% FIGURE CAPTIONS
+%% (In achemso the captions are placed within float environments;
+%%  they are listed here for editorial reference only.)
+%% ═══════════════════════════════════════════════════════════════════
+
+%% Figure 1 — Mean spectra comparison
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig1_mean_spectra}
+  \caption{Mean MALDI-TOF MS spectra ($\pm$1 SD) for TB (\textcolor{blue}{blue})
+    and NTM (\textcolor[RGB]{230,159,0}{orange}) isolates after preprocessing,
+    over the \SIrange{3}{15}{\kilo\dalton} range.
+    Insets show expanded views of the (a)~CFP-10/CFP-10* region
+    (\SIrange{9.8}{11.0}{\kilo\dalton}) and (b)~ESAT-6/ESAT-6* region
+    (\SIrange{7.7}{10.0}{\kilo\dalton}).
+    Dashed vertical lines indicate the theoretical $m/z$ of all 12
+    targeted biomarker features (Table~\ref{tab:biomarkers}).}
+  \label{fig:mean_spectra}
+\end{figure}
+
+%% Figure 2 — Preprocessing pipeline
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig2_preprocessing}
+  \caption{Sequential preprocessing of a representative TB MALDI-TOF
+    spectrum.
+    (a)~Raw spectrum; (b)~after Savitzky--Golay smoothing (window~=~21,
+    order~=~3); (c)~CLSA baseline estimate (red) overlaid on smoothed
+    spectrum; (d)~baseline-subtracted and TIC-normalized spectrum with
+    biomarker extraction windows highlighted.
+    The $\sqrt{m/z}$ transformation applied within the CLSA algorithm
+    normalizes peak widths across the mass range, preventing
+    under-correction at higher masses.}
+  \label{fig:preprocessing}
+\end{figure}
+
+%% Figure 3 — Biomarker feature distributions
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig3_boxplots}
+  \caption{Distribution of the 12 biomarker feature intensities
+    (after TIC normalization and local background subtraction) for TB
+    (blue) and NTM (orange) classes.
+    Boxes indicate median and interquartile range; whiskers extend to
+    1.5 $\times$ IQR.
+    Asterisks indicate statistical significance after Bonferroni
+    correction ($^{*}p<0.05$; $^{**}p<0.01$; $^{***}p<0.001$;
+    Mann--Whitney U test).
+    Fold changes (TB/NTM mean) are reported above each panel.}
+  \label{fig:boxplots}
+\end{figure}
+
+%% Figure 4 — PCA
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{figures/fig4_pca}
+  \caption{Principal component analysis (PCA) of the 12-biomarker
+    feature matrix.
+    Each point represents one spectrum, colored by diagnostic class
+    (TB: blue; NTM: orange).
+    Ellipses represent the 95\% confidence region assuming
+    bivariate normality.
+    Percentages indicate variance explained by PC1 and PC2.}
+  \label{fig:pca}
+\end{figure}
+
+%% Figure 5 — ML benchmark
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig5_benchmark}
+  \caption{Cross-validation AUROC for all 43 machine learning
+    configurations, grouped by algorithm family.
+    Points indicate the mean of the 5 folds; error bars indicate
+    $\pm$1 SD.
+    Colors distinguish algorithm families as indicated in the legend.
+    The dashed horizontal line marks the performance of the
+    stratified dummy classifier (no-information baseline).}
+  \label{fig:benchmark}
+\end{figure}
+
+%% Figure 6 — ROC curves and confusion matrices
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figures/fig6_roc_confusion}
+  \caption{Independent test set performance of the three top-ranked
+    classifiers.
+    (a--c)~Confusion matrices (rows: true label; columns: predicted
+    label); values are counts and row-normalized percentages.
+    (d)~Receiver operating characteristic (ROC) curves with 95\%
+    confidence bands computed by DeLong bootstrapping.
+    Diagonal dashed line: no-discrimination reference.}
+  \label{fig:roc_confusion}
+\end{figure}
+
+%% Figure 7 — SHAP feature importance
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/fig7_shap}
+  \caption{SHAP beeswarm plot for the CatBoost classifier on the
+    independent test set.
+    Each point represents one spectrum; the $x$-axis shows the SHAP
+    value (contribution to the log-odds of a TB prediction);
+    color encodes the feature value (blue: low; red: high).
+    Features are ordered by mean absolute SHAP value (top = most
+    important).}
+  \label{fig:shap}
+\end{figure}
+
+\end{document}

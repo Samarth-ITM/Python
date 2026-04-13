@@ -1,0 +1,320 @@
+\providecommand{\latin}[1]{#1}
+\makeatletter
+\providecommand{\doi}
+  {\begingroup\let\do\@makeother\dospecials
+  \catcode`\{=1 \catcode`\}=2 \doi@aux}
+\providecommand{\doi@aux}[1]{\endgroup\texttt{#1}}
+\makeatother
+\providecommand*\mcitethebibliography{\thebibliography}
+\csname @ifundefined\endcsname{endmcitethebibliography}
+  {\let\endmcitethebibliography\endthebibliography}{}
+\begin{mcitethebibliography}{33}
+\providecommand*\natexlab[1]{#1}
+\providecommand*\mciteSetBstSublistMode[1]{}
+\providecommand*\mciteSetBstMaxWidthForm[2]{}
+\providecommand*\mciteBstWouldAddEndPuncttrue
+  {\def\EndOfBibitem{\unskip.}}
+\providecommand*\mciteBstWouldAddEndPunctfalse
+  {\let\EndOfBibitem\relax}
+\providecommand*\mciteSetBstMidEndSepPunct[3]{}
+\providecommand*\mciteSetBstSublistLabelBeginEnd[3]{}
+\providecommand*\EndOfBibitem{}
+\mciteSetBstSublistMode{f}
+\mciteSetBstMaxWidthForm{subitem}{(\alph{mcitesubitemcount})}
+\mciteSetBstSublistLabelBeginEnd
+  {\mcitemaxwidthsubitemform\space}
+  {\relax}
+  {\relax}
+
+\bibitem[{World Health Organization}(2024)]{WHO2024}
+{World Health Organization} \emph{Global Tuberculosis Report 2024}; 2024\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Daley \latin{et~al.}(2020)Daley, Iaccarino, Lange, \latin{et~al.}
+  others]{Daley2020NTM}
+Daley,~C.~L.; Iaccarino,~J.~M.; Lange,~C.; others Treatment of Nontuberculous
+  Mycobacterial Pulmonary Disease: An Official {ATS}/{ERS}/{ESCMID}/{IDSA}
+  Clinical Practice Guideline. \emph{Clin. Infect. Dis.} \textbf{2020},
+  \emph{71}, e1--e36\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Winthrop and Daley(2020)Winthrop, and Daley]{Winthrop2020NTM}
+Winthrop,~K.~L.; Daley,~C.~L. Nontuberculous Mycobacterial Disease: Emerging
+  Challenges. \emph{Eur. Respir. J.} \textbf{2020}, \emph{55}, 1901608\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Griffith \latin{et~al.}(2007)Griffith, Aksamit, Brown-Elliott,
+  \latin{et~al.} others]{Griffith2007ATS}
+Griffith,~D.~E.; Aksamit,~T.; Brown-Elliott,~B.~A.; others An Official
+  {ATS}/{IDSA} Statement: Diagnosis, Treatment, and Prevention of
+  Nontuberculous Mycobacterial Diseases. \emph{Am. J. Respir. Crit. Care Med.}
+  \textbf{2007}, \emph{175}, 367--416\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Minion \latin{et~al.}(2010)Minion, Leung, Menzies, and
+  Pai]{Minion2010}
+Minion,~J.; Leung,~E.; Menzies,~D.; Pai,~M. Microscopic-Observation Drug
+  Susceptibility and Thin Layer Agar Assays for the Detection of Drug Resistant
+  Tuberculosis: A Systematic Review and Meta-Analysis. \emph{Lancet Infect.
+  Dis.} \textbf{2010}, \emph{10}, 688--698\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Steingart \latin{et~al.}(2014)Steingart, Schiller, Horne,
+  \latin{et~al.} others]{Steingart2014Xpert}
+Steingart,~K.~R.; Schiller,~I.; Horne,~D.~J.; others {Xpert}{\textregistered}
+  {MTB/RIF} Assay for Pulmonary Tuberculosis and Rifampicin Resistance in
+  Adults. \emph{Cochrane Database Syst. Rev.} \textbf{2014}, \emph{1},
+  CD009593\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Votintseva \latin{et~al.}(2017)Votintseva, Bradley, Pankhurst,
+  \latin{et~al.} others]{Votintseva2017WGS}
+Votintseva,~A.~A.; Bradley,~P.; Pankhurst,~L.; others Same-Day Diagnostic and
+  Surveillance Data for Tuberculosis via Whole-Genome Sequencing of Direct
+  Respiratory Samples. \emph{J. Clin. Microbiol.} \textbf{2017}, \emph{55},
+  1285--1298\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Seng \latin{et~al.}(2009)Seng, Drancourt, Gouriet, \latin{et~al.}
+  others]{Seng2009MALDI}
+Seng,~P.; Drancourt,~M.; Gouriet,~F.; others Ongoing Revolution in
+  Bacteriology: Routine Identification of Bacteria by Matrix-Assisted Laser
+  Desorption Ionization Time-of-Flight Mass Spectrometry. \emph{Clin. Infect.
+  Dis.} \textbf{2009}, \emph{49}, 543--551\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Lagier \latin{et~al.}(2015)Lagier, Edouard, Pagnier, \latin{et~al.}
+  others]{Lagier2015}
+Lagier,~J.-C.; Edouard,~S.; Pagnier,~I.; others Current and Past Strategies for
+  Bacterial Culture in Clinical Microbiology. \emph{Clin. Microbiol. Rev.}
+  \textbf{2015}, \emph{28}, 208--236\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[van Veen \latin{et~al.}(2010)van Veen, Claas, and
+  Kuijper]{van_Veen2010}
+van Veen,~S.~Q.; Claas,~E. C.~J.; Kuijper,~E.~J. High-Throughput Identification
+  of Bacteria and Yeast by Matrix-Assisted Laser Desorption Ionization--Time of
+  Flight Mass Spectrometry in Conventional Medical Microbiology Laboratories.
+  \emph{J. Clin. Microbiol.} \textbf{2010}, \emph{48}, 900--907\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Carbonnelle \latin{et~al.}(2011)Carbonnelle, Mesquita, Bille,
+  \latin{et~al.} others]{Carbonnelle2012}
+Carbonnelle,~E.; Mesquita,~C.; Bille,~E.; others {MALDI-TOF} Mass Spectrometry
+  Tools for Bacterial Identification in Clinical Microbiology Laboratory.
+  \emph{Clin. Biochem.} \textbf{2011}, \emph{44}, 104--109\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Mather \latin{et~al.}(2014)Mather, Rivera, and
+  Butler-Wu]{Mather2011MALDI_Myco}
+Mather,~C.~A.; Rivera,~S.~F.; Butler-Wu,~S.~M. Comparison of the Bruker
+  Biotyper and Vitek {MS} Matrix-Assisted Laser Desorption Ionization--Time of
+  Flight Mass Spectrometry Systems for Identification of Mycobacteria Using
+  Standardized Cultured Isolates. \emph{J. Clin. Microbiol.} \textbf{2014},
+  \emph{52}, 466--469\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[El~Khéchine \latin{et~al.}(2009)El~Khéchine, Henry, Raoult, and
+  Drancourt]{El_Khechine2011}
+El~Khéchine,~A.; Henry,~M.; Raoult,~D.; Drancourt,~M. Detection of
+  Mycobacterium tuberculosis Complex Organisms in the Stools of Patients with
+  Pulmonary Tuberculosis. \emph{Microbiology} \textbf{2009}, \emph{155},
+  2384--2389\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Berthet \latin{et~al.}(1998)Berthet, Rasmussen, Rosenkrands, Andersen,
+  and Gicquel]{Berthet1998}
+Berthet,~F.-X.; Rasmussen,~P.~B.; Rosenkrands,~I.; Andersen,~P.; Gicquel,~B. A
+  Mycobacterium tuberculosis operon encoding {ESAT-6} and a novel
+  low-molecular-mass culture filtrate protein ({CFP-10}). \emph{Microbiology}
+  \textbf{1998}, \emph{144}, 3195--3203\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Sørensen \latin{et~al.}(1995)Sørensen, Nagai, Houen, Andersen, and
+  Andersen]{Sorensen1995}
+Sørensen,~A.~L.; Nagai,~S.; Houen,~G.; Andersen,~P.; Andersen,~A.~B.
+  Purification and Characterization of a Low-Molecular-Mass T-Cell Antigen
+  Secreted by Mycobacterium tuberculosis. \emph{Infect. Immun.} \textbf{1995},
+  \emph{63}, 1710--1717\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Mori \latin{et~al.}(2004)Mori, Sakatani, Yamagishi, \latin{et~al.}
+  others]{Mori2004}
+Mori,~T.; Sakatani,~M.; Yamagishi,~F.; others Specific Detection of
+  Tuberculosis Infection: An Interferon-$\gamma$-Based Assay Using New
+  Antigens. \emph{Am. J. Respir. Crit. Care Med.} \textbf{2004}, \emph{170},
+  59--64\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Pai \latin{et~al.}(2014)Pai, Denkinger, Kik, \latin{et~al.}
+  others]{Pai2016IGRA}
+Pai,~M.; Denkinger,~C.~M.; Kik,~S.~V.; others Gamma Interferon Release Assays
+  for Detection of Mycobacterium tuberculosis Infection. \emph{Clin. Microbiol.
+  Rev.} \textbf{2014}, \emph{27}, 3--20\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Lotz \latin{et~al.}(2010)Lotz, Blackmore, Dobson, \latin{et~al.}
+  others]{Lotz2010}
+Lotz,~A.~S.; Blackmore,~T.~M.; Dobson,~R. C.~J.; others Design of Experiments
+  to Develop a Multi-Class Diagnostic Test for Fever of Unknown Origin Using
+  Mass Spectrometric Detection of Serum Biomarker Panels. \emph{J. Transl.
+  Med.} \textbf{2010}, \emph{8}, 117\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Virtanen \latin{et~al.}(2020)Virtanen, Gommers, Oliphant,
+  \latin{et~al.} others]{SciPy}
+Virtanen,~P.; Gommers,~R.; Oliphant,~T.~E.; others {SciPy} 1.0: Fundamental
+  Algorithms for Scientific Computing in Python. \emph{Nat. Methods}
+  \textbf{2020}, \emph{17}, 261--272\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Harris \latin{et~al.}(2020)Harris, Millman, van~der Walt,
+  \latin{et~al.} others]{NumPy}
+Harris,~C.~R.; Millman,~K.~J.; van~der Walt,~S.~J.; others Array Programming
+  with {NumPy}. \emph{Nature} \textbf{2020}, \emph{585}, 357--362\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Savitzky and Golay(1964)Savitzky, and Golay]{Savitzky1964}
+Savitzky,~A.; Golay,~M. J.~E. Smoothing and Differentiation of Data by
+  Simplified Least Squares Procedures. \emph{Anal. Chem.} \textbf{1964},
+  \emph{36}, 1627--1639\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Eilers and Boelens(2005)Eilers, and Boelens]{Eilers2005ALS}
+Eilers,~P. H.~C.; Boelens,~H. F.~M. Baseline Correction with Asymmetric Least
+  Squares Smoothing. \emph{Leiden University Medical Centre Report}
+  \textbf{2005}, Unpublished manuscript\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Sauve and Speed(2004)Sauve, and Speed]{Sauve2004CLSA}
+Sauve,~A.-C.; Speed,~T.~P. Normalization, Baseline Correction and Alignment of
+  High-Throughput Mass Spectrometry Data. \emph{Proc. 2004 CASE Workshop}
+  \textbf{2004}, Technical report, UC Berkeley\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Gross(2004)]{Gross2004MS}
+Gross,~J.~H. \emph{Mass Spectrometry: A Textbook}; Springer: Berlin, Germany,
+  2004\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Broadhurst \latin{et~al.}(2018)Broadhurst, Goodacre, Reinke,
+  \latin{et~al.} others]{Broadhurst2018}
+Broadhurst,~D.; Goodacre,~R.; Reinke,~S.~N.; others Guidelines and
+  Considerations for the Use of System Suitability and Quality Control Samples
+  in Mass Spectrometry Assays Applied in Untargeted Clinical Metabolomic
+  Studies. \emph{Metabolomics} \textbf{2018}, \emph{14}, 72\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Pedregosa \latin{et~al.}(2011)Pedregosa, Varoquaux, Gramfort,
+  \latin{et~al.} others]{scikit-learn}
+Pedregosa,~F.; Varoquaux,~G.; Gramfort,~A.; others Scikit-learn: Machine
+  Learning in Python. \emph{J. Mach. Learn. Res.} \textbf{2011}, \emph{12},
+  2825--2830\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Chen and Guestrin(2016)Chen, and Guestrin]{Chen2016XGBoost}
+Chen,~T.; Guestrin,~C. {XGBoost}: A Scalable Tree Boosting System. Proceedings
+  of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and
+  Data Mining. 2016; pp 785--794\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Ke \latin{et~al.}(2017)Ke, Meng, Finley, \latin{et~al.}
+  others]{Ke2017LightGBM}
+Ke,~G.; Meng,~Q.; Finley,~T.; others {LightGBM}: A Highly Efficient Gradient
+  Boosting Decision Tree. \emph{Adv. Neural Inf. Process. Syst.} \textbf{2017},
+  \emph{30}, 3146--3154\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Prokhorenkova \latin{et~al.}(2018)Prokhorenkova, Gusev, Vorobev,
+  Dorogush, and Gulin]{Prokhorenkova2018CatBoost}
+Prokhorenkova,~L.; Gusev,~G.; Vorobev,~A.; Dorogush,~A.~V.; Gulin,~A.
+  {CatBoost}: Unbiased Boosting with Categorical Features. \emph{Adv. Neural
+  Inf. Process. Syst.} \textbf{2018}, \emph{31}\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Brodersen \latin{et~al.}(2010)Brodersen, Ong, Stephan, and
+  Buhmann]{Brodersen2010}
+Brodersen,~K.~H.; Ong,~C.~S.; Stephan,~K.~E.; Buhmann,~J.~M. The Balanced
+  Accuracy and Its Posterior Distribution. \emph{Proc. Int. Conf. Pattern
+  Recognit.} \textbf{2010}, 3121--3124\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[DeLong \latin{et~al.}(1988)DeLong, DeLong, and
+  Clarke-Pearson]{DeLong1988}
+DeLong,~E.~R.; DeLong,~D.~M.; Clarke-Pearson,~D.~L. Comparing the Areas under
+  Two or More Correlated Receiver Operating Characteristic Curves: A
+  Nonparametric Approach. \emph{Biometrics} \textbf{1988}, \emph{44},
+  837--845\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\bibitem[Lundberg and Lee(2017)Lundberg, and Lee]{Lundberg2017SHAP}
+Lundberg,~S.~M.; Lee,~S.-I. A Unified Approach to Interpreting Model
+  Predictions. \emph{Adv. Neural Inf. Process. Syst.} \textbf{2017},
+  \emph{30}\relax
+\mciteBstWouldAddEndPuncttrue
+\mciteSetBstMidEndSepPunct{\mcitedefaultmidpunct}
+{\mcitedefaultendpunct}{\mcitedefaultseppunct}\relax
+\EndOfBibitem
+\end{mcitethebibliography}

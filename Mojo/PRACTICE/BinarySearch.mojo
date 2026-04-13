@@ -1,6 +1,6 @@
 def main(): 
-    nums = [1, 2, 3, 4, 5, 6, 7]
-    target = 2
+    nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    target = 7
     l = 0
     r = len(nums) - 1
     f = 0
@@ -18,5 +18,8 @@ def main():
 
     if f != 1:
         print("Not Found")
+
+
+
 
 

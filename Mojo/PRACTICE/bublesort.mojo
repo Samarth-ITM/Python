@@ -4,7 +4,7 @@ fn bubble_sort() -> List[Int]:
 
     for i in range(n):
         flag = False
-        for j in range(0, n - i):
+        for j in range(0, n - i): 
             if nums[j] > nums[j + 1]:
                 nums[j], nums[j + 1] = nums[j+1], nums[j]
                 flag = True
@@ -17,5 +17,4 @@ fn bubble_sort() -> List[Int]:
 fn main() -> None:
     sorted_nums = bubble_sort()
     print(sorted_nums)
-
 
