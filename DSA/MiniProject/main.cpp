@@ -41,7 +41,7 @@ void loadFromCSV(Inventory &inv);
 
 void displayMainMenu()
 {
-    cout << "\n========== Grocery Inventory System ==========\n";
+    cout << "\nGrocery Inventory System\n";
     cout << "1. Add Product\n";
     cout << "2. View All Products\n";
     cout << "3. Delete Product\n";
@@ -49,22 +49,19 @@ void displayMainMenu()
     cout << "5. Search Product\n";
     cout << "6. Sort Products\n";
     cout << "7. Exit\n";
-    cout << "============================================\n";
-    cout << "Enter your choice: ";
+    cout << "Enter choice: ";
 }
 
 void displaySearchMenu()
 {
-    cout << "\n--- Searching by Product Name (Both Linear & Binary) ---\n";
+    cout << "\nSearch by Product Name (Linear & Binary)\n";
 }
 
 void displaySortMenu()
 {
-    cout << "\n--- Sort By ---\n";
-    cout << "1. Price\n";
-    cout << "2. Quantity\n";
-    cout << "(Both Bubble & Merge sort will run)\n";
-    cout << "Choose: ";
+    cout << "\nSort By: 1=Price, 2=Quantity\n";
+    cout << "(Both Bubble & Merge Sort will run)\n";
+    cout << "Enter: ";
 }
 
 int main()
@@ -77,28 +74,29 @@ int main()
     while (running)
     {
         displayMainMenu();
-        cin >> choice;
+        if (!(cin >> choice))
+        {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid input! Enter 1-7.\n";
+            continue;
+        }
         cin.ignore();
 
         if (choice == 1)
         {
             Product newProduct;
-            cout << "\n--- Add New Product ---\n";
-
-            cout << "Enter Product Name: ";
+            cout << "\nProduct Name: ";
             getline(cin, newProduct.name);
-
-            cout << "Enter Quantity: ";
+            cout << "Quantity: ";
             cin >> newProduct.quantity;
             cin.ignore();
-
-            cout << "Enter Price: ";
+            cout << "Price: ";
             cin >> newProduct.price;
             cin.ignore();
 
             addProduct(inv, newProduct);
             saveToCSV(inv);
-            cout << "\nHere are all the products:\n\n";
             displayProducts(inv);
         }
         else if (choice == 2)
@@ -107,26 +105,22 @@ int main()
         }
         else if (choice == 3)
         {
-            cout << "\nHere are all the products:\n\n";
             displayProducts(inv);
-            cout << "\nEnter Product ID to Delete: ";
+            cout << "Product ID to Delete: ";
             int deleteId;
             cin >> deleteId;
             deleteProduct(inv, deleteId);
             saveToCSV(inv);
-            cout << "\nUpdated product list:\n\n";
             displayProducts(inv);
         }
         else if (choice == 4)
         {
-            cout << "\nHere are all the products:\n\n";
             displayProducts(inv);
-            cout << "\nEnter Product ID to Update: ";
+            cout << "Product ID to Update: ";
             int updateId;
             cin >> updateId;
             updateProduct(inv, updateId);
             saveToCSV(inv);
-            cout << "\nUpdated product list:\n\n";
             displayProducts(inv);
         }
         else if (choice == 5)
@@ -148,25 +142,24 @@ int main()
 
             if (sortBy == 1 || sortBy == 2)
             {
-                cout << "\n=== Running Both Sorts ===\n";
                 bubbleSort(inv, sortBy);
                 mergeSortInventory(inv, sortBy);
             }
             else
             {
-                cout << "\nInvalid choice!\n\n";
+                cout << "Invalid choice!\n";
             }
         }
         else if (choice == 7)
         {
             saveToCSV(inv);
-            cout << "Exiting Grocery Inventory System. Goodbye!\n\n";
+            cout << "Thank You!\n";
             deleteAllProducts(inv.head);
             running = false;
         }
         else
         {
-            cout << "\nInvalid choice! Please try again.\n\n";
+            cout << "Invalid choice!\n";
         }
     }
 

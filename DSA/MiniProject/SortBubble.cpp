@@ -32,14 +32,14 @@ void bubbleSort(Inventory &inv, int sortBy)
 
     if (count == 0)
     {
-        cout << "\nInventory is empty!\n\n";
+        cout << "Inventory is empty!\n";
         return;
     }
 
     Product *array = new Product[count];
-
     Node *current = getHead(inv);
     int index = 0;
+
     while (current != NULL)
     {
         array[index] = current->data;
@@ -53,16 +53,7 @@ void bubbleSort(Inventory &inv, int sortBy)
     {
         for (int j = 0; j < count - 1 - i; j++)
         {
-            bool swap = false;
-            if (sortBy == 1)
-            {
-                swap = array[j].price > array[j + 1].price;
-            }
-            else if (sortBy == 2)
-            {
-                swap = array[j].quantity > array[j + 1].quantity;
-            }
-
+            bool swap = (sortBy == 1) ? (array[j].price > array[j + 1].price) : (array[j].quantity > array[j + 1].quantity);
             if (swap)
             {
                 Product temp = array[j];
@@ -76,26 +67,19 @@ void bubbleSort(Inventory &inv, int sortBy)
     long long elapsed = getElapsedMicroseconds(start, end);
 
     string sortType = (sortBy == 1) ? "Price" : "Quantity";
-    cout << "\n--- Sorted by " << sortType << " (Bubble Sort) ---\n\n";
-    cout << setw(15) << "Name" << setw(12) << sortType << "\n";
-    cout << string(27, '-') << "\n";
+    cout << "\nBubble Sort by " << sortType << ":\n";
+    cout << "Time: " << elapsed << " microseconds (O(n^2))\n\n";
 
+    cout << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Qty"
+         << setw(10) << "Price\n";
+    cout << string(45, '-') << "\n";
     for (int i = 0; i < count; i++)
     {
-        if (sortBy == 1)
-        {
-            cout << setw(15) << array[i].name
-                 << setw(12) << fixed << setprecision(2) << array[i].price << "\n";
-        }
-        else
-        {
-            cout << setw(15) << array[i].name
-                 << setw(12) << array[i].quantity << "\n";
-        }
+        cout << setw(5) << array[i].id << setw(20) << array[i].name
+             << setw(10) << array[i].quantity << setw(10)
+             << fixed << setprecision(2) << array[i].price << "\n";
     }
-
-    cout << "\nBubble Sort Time: " << elapsed << " microseconds\n";
-    cout << "Complexity: O(n^2)\n\n";
+    cout << "\n";
 
     delete[] array;
 }

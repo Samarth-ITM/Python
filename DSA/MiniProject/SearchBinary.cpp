@@ -1,6 +1,5 @@
 #include "Timer.h"
 #include <iostream>
-#include <iomanip>
 
 using namespace std;
 
@@ -32,14 +31,14 @@ void binarySearch(Inventory &inv, string searchName)
 
     if (count == 0)
     {
-        cout << "\nInventory is empty!\n\n";
+        cout << "Inventory is empty!\n";
         return;
     }
 
     Product *array = new Product[count];
-
     Node *current = getHead(inv);
     int index = 0;
+
     while (current != NULL)
     {
         array[index] = current->data;
@@ -47,7 +46,6 @@ void binarySearch(Inventory &inv, string searchName)
         current = current->next;
     }
 
-    // Sort by product name for binary search
     for (int i = 0; i < count - 1; i++)
     {
         for (int j = 0; j < count - 1 - i; j++)
@@ -63,49 +61,36 @@ void binarySearch(Inventory &inv, string searchName)
 
     auto start = chrono::high_resolution_clock::now();
 
-    int left = 0;
-    int right = count - 1;
-    bool found = false;
-    int foundIndex = -1;
+    int left = 0, right = count - 1, foundIndex = -1;
 
     while (left <= right)
     {
         int mid = left + (right - left) / 2;
-
         if (array[mid].name == searchName)
         {
-            found = true;
             foundIndex = mid;
             break;
         }
         else if (array[mid].name < searchName)
-        {
             left = mid + 1;
-        }
         else
-        {
             right = mid - 1;
-        }
     }
 
     auto end = chrono::high_resolution_clock::now();
     long long elapsed = getElapsedMicroseconds(start, end);
 
-    if (found)
+    if (foundIndex != -1)
     {
-        cout << "\n--- Binary Search Results ---\n";
-        cout << "Product Found!\n";
-        cout << "ID: " << array[foundIndex].id << "\n";
-        cout << "Name: " << array[foundIndex].name << "\n";
-        cout << "Quantity: " << array[foundIndex].quantity << "\n";
-        cout << "Price: " << fixed << setprecision(2) << array[foundIndex].price << "\n";
-        cout << "Time: " << elapsed << " microseconds | Complexity: O(log n)\n\n";
+        cout << "\nBinary Search - Found!\n";
+        cout << "ID: " << array[foundIndex].id << ", Name: " << array[foundIndex].name
+             << ", Qty: " << array[foundIndex].quantity << ", Price: " << array[foundIndex].price << "\n";
+        cout << "Time: " << elapsed << " microseconds (O(log n))\n";
     }
     else
     {
-        cout << "\n--- Binary Search Results ---\n";
-        cout << "Product Not Found!\n";
-        cout << "Time: " << elapsed << " microseconds | Complexity: O(log n)\n\n";
+        cout << "\nBinary Search - Not Found!\n";
+        cout << "Time: " << elapsed << " microseconds (O(log n))\n";
     }
 
     delete[] array;

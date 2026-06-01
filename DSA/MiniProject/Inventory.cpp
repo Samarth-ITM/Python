@@ -65,14 +65,14 @@ void addProduct(Inventory &inv, Product p)
         current->next = newNode;
     }
 
-    cout << "\nProduct Added Successfully! (ID: " << p.id << ")\n\n";
+    cout << "Added! (ID: " << p.id << ")\n";
 }
 
 void deleteProduct(Inventory &inv, int id)
 {
     if (inv.head == NULL)
     {
-        cout << "\nInventory is empty!\n\n";
+        cout << "Empty!\n";
         return;
     }
 
@@ -81,7 +81,7 @@ void deleteProduct(Inventory &inv, int id)
         Node *temp = inv.head;
         inv.head = inv.head->next;
         delete temp;
-        cout << "\nProduct Deleted Successfully!\n\n";
+        cout << "Deleted!\n";
         return;
     }
 
@@ -93,7 +93,7 @@ void deleteProduct(Inventory &inv, int id)
             Node *temp = current->next;
             current->next = temp->next;
             delete temp;
-            cout << "\nProduct Deleted Successfully!\n\n";
+            cout << "Deleted!\n";
             return;
         }
         current = current->next;
@@ -151,25 +151,23 @@ void displayProducts(Inventory &inv)
 {
     if (inv.head == NULL)
     {
-        cout << "\nNo products in inventory!\n\n";
+        cout << "No products!\n";
         return;
     }
 
-    cout << "\n--- Inventory ---\n\n";
-    cout << setw(6) << "ID" << setw(15) << "Name" << setw(12) << "Quantity"
-         << setw(10) << "Price" << "\n";
-    cout << string(43, '-') << "\n";
+    cout << "\n"
+         << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Qty"
+         << setw(10) << "Price\n";
+    cout << string(45, '-') << "\n";
 
     Node *current = inv.head;
     while (current != NULL)
     {
-        cout << setw(6) << current->data.id
-             << setw(15) << current->data.name
-             << setw(12) << current->data.quantity
-             << setw(10) << fixed << setprecision(2) << current->data.price << "\n";
+        cout << setw(5) << current->data.id << setw(20) << current->data.name
+             << setw(10) << current->data.quantity << setw(10)
+             << fixed << setprecision(2) << current->data.price << "\n";
         current = current->next;
     }
-
     cout << "\n";
 }
 
