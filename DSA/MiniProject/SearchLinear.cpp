@@ -11,7 +11,6 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };
 
 struct Node
@@ -28,18 +27,13 @@ struct Inventory
 int countProducts(Inventory &inv);
 Node *getHead(Inventory &inv);
 
-void linearSearch(Inventory &inv)
+void linearSearch(Inventory &inv, string searchName)
 {
     if (countProducts(inv) == 0)
     {
         cout << "\nInventory is empty!\n\n";
         return;
     }
-
-    cin.ignore();
-    cout << "\nEnter Product Name to Search: ";
-    string searchName;
-    getline(cin, searchName);
 
     auto start = chrono::high_resolution_clock::now();
 
@@ -53,15 +47,13 @@ void linearSearch(Inventory &inv)
             auto end = chrono::high_resolution_clock::now();
             long long elapsed = getElapsedMicroseconds(start, end);
 
-            cout << "\n--- Product Found ---\n\n";
+            cout << "\n--- Linear Search Results ---\n";
+            cout << "Product Found!\n";
             cout << "ID: " << current->data.id << "\n";
             cout << "Name: " << current->data.name << "\n";
             cout << "Quantity: " << current->data.quantity << "\n";
             cout << "Price: " << fixed << setprecision(2) << current->data.price << "\n";
-            cout << "Category: " << current->data.category << "\n";
-
-            cout << "\nLinear Search Time: " << elapsed << " microseconds\n";
-            cout << "Complexity: O(n)\n\n";
+            cout << "Time: " << elapsed << " microseconds | Complexity: O(n)\n\n";
 
             found = true;
             return;
@@ -69,13 +61,13 @@ void linearSearch(Inventory &inv)
         current = current->next;
     }
 
+    auto end = chrono::high_resolution_clock::now();
+    long long elapsed = getElapsedMicroseconds(start, end);
+
     if (!found)
     {
-        auto end = chrono::high_resolution_clock::now();
-        long long elapsed = getElapsedMicroseconds(start, end);
-
-        cout << "\nProduct Not Found!\n";
-        cout << "Linear Search Time: " << elapsed << " microseconds\n";
-        cout << "Complexity: O(n)\n\n";
+        cout << "\n--- Linear Search Results ---\n";
+        cout << "Product Not Found!\n";
+        cout << "Time: " << elapsed << " microseconds | Complexity: O(n)\n\n";
     }
 }

@@ -1,0 +1,100 @@
+id,name,quantity,price
+2,Banana,150,1.5
+3,Orange,80,3
+4,Mango,60,4.5
+5,Grapes,45,5
+6,Watermelon,30,8
+7,Pineapple,25,6.5
+8,Strawberry,120,4
+9,Blueberry,90,5.5
+10,Papaya,40,3.5
+11,Coconut,55,3
+12,Kiwi,75,4
+13,Lemon,200,1
+14,Lime,180,1.2
+15,Carrot,250,0.8
+16,Broccoli,100,2
+17,Cabbage,120,1.5
+18,Lettuce,95,1.8
+19,Tomato,200,1.5
+20,Cucumber,150,1.2
+21,Bell Pepper,110,2.5
+22,Onion,300,0.9
+23,Garlic,400,0.5
+24,Potato,500,0.6
+25,Sweet Potato,180,1.3
+26,Spinach,80,2.5
+27,Kale,60,3
+28,Peas,140,2.2
+29,Corn,130,1.8
+30,Beans,160,2.5
+31,Milk,200,2.5
+32,Cheese,90,5
+33,Yogurt,120,3.5
+34,Butter,70,6
+35,Cream,60,4.5
+36,Eggs,500,0.3
+37,Chicken,150,8
+38,Beef,100,12
+39,Pork,120,9.5
+40,Fish,80,10
+41,Salmon,60,15
+42,Shrimp,50,14
+43,Rice,300,1.5
+44,Wheat,250,2
+45,Oats,180,3
+46,Bread,120,2.5
+47,Pasta,200,1.8
+48,Cereal,95,4
+49,Flour,220,1.2
+50,Sugar,180,0.8
+51,Salt,300,0.5
+52,Pepper,200,1.5
+53,Honey,85,6
+54,Oil,110,3.5
+55,Butter Oil,95,4
+56,Vinegar,140,2
+57,Soy Sauce,130,2.5
+58,Ketchup,150,1.8
+59,Mayonnaise,120,3
+60,Mustarddddd,140,1.5
+61,Coffee,160,5
+62,Tea,200,3
+63,Juice,250,2
+64,Water,500,0.5
+65,Soda,300,1.5
+66,Beer,180,3.5
+67,Wine,100,8
+68,Chocolate,220,2.5
+69,Candy,300,1
+70,Cookie,280,2
+71,Cake,95,5
+72,Donut,150,1.5
+73,Peanut Butter,140,4
+74,Almond Butter,110,5.5
+75,Jam,180,3
+76,Jelly,160,2.5
+77,Nuts,190,6
+78,Almonds,160,7
+79,Cashews,140,8
+80,Walnuts,130,9
+81,Seeds,175,4.5
+82,Cereal Bar,220,2
+83,Granola,190,3.5
+84,Chips,280,2
+85,Crackers,260,2.5
+86,Pretzels,240,1.8
+87,Popcorn,210,1.5
+88,Soap,300,1
+89,Shampoo,180,3
+90,Toothpaste,220,2
+91,Toothbrush,300,1.5
+92,Deodorant,240,2.5
+93,Lotion,160,3.5
+94,Sunscreen,140,4
+95,Paper Towel,280,1.5
+96,Toilet Paper,320,0.8
+97,Napkins,250,1.2
+98,Trash Bags,200,2
+99,Detergent,175,4.5
+101,MangoMustard,6767,69420

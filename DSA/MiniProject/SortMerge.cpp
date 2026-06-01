@@ -10,36 +10,23 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };
 
-class Node
+struct Node
 {
-public:
     Product data;
     Node *next;
 };
 
-class Inventory
+struct Inventory
 {
-private:
     Node *head;
-
-public:
-    Inventory();
-    ~Inventory();
-
-    void addProduct(Product p);
-    void deleteProduct(int id);
-    void updateProduct(int id);
-    void displayProducts();
-    int countProducts();
-    Node *getHead();
 };
 
-void mergeSortInventory(Inventory &inventory);
+int countProducts(Inventory &inv);
+Node *getHead(Inventory &inv);
 
-void merge(Product *array, int left, int mid, int right)
+void merge(Product *array, int left, int mid, int right, int sortBy)
 {
     int leftSize = mid - left + 1;
     int rightSize = right - mid;
@@ -63,7 +50,17 @@ void merge(Product *array, int left, int mid, int right)
 
     while (i < leftSize && j < rightSize)
     {
-        if (leftArray[i].price <= rightArray[j].price)
+        bool leftSmaller = false;
+        if (sortBy == 1)
+        {
+            leftSmaller = leftArray[i].price <= rightArray[j].price;
+        }
+        else if (sortBy == 2)
+        {
+            leftSmaller = leftArray[i].quantity <= rightArray[j].quantity;
+        }
+
+        if (leftSmaller)
         {
             array[k] = leftArray[i];
             i++;
@@ -94,20 +91,20 @@ void merge(Product *array, int left, int mid, int right)
     delete[] rightArray;
 }
 
-void mergeSortHelper(Product *array, int left, int right)
+void mergeSortHelper(Product *array, int left, int right, int sortBy)
 {
     if (left < right)
     {
         int mid = left + (right - left) / 2;
-        mergeSortHelper(array, left, mid);
-        mergeSortHelper(array, mid + 1, right);
-        merge(array, left, mid, right);
+        mergeSortHelper(array, left, mid, sortBy);
+        mergeSortHelper(array, mid + 1, right, sortBy);
+        merge(array, left, mid, right, sortBy);
     }
 }
 
-void mergeSortInventory(Inventory &inventory)
+void mergeSortInventory(Inventory &inv, int sortBy)
 {
-    int count = inventory.countProducts();
+    int count = countProducts(inv);
 
     if (count == 0)
     {
@@ -117,7 +114,7 @@ void mergeSortInventory(Inventory &inventory)
 
     Product *array = new Product[count];
 
-    Node *current = inventory.getHead();
+    Node *current = getHead(inv);
     int index = 0;
     while (current != NULL)
     {
@@ -128,19 +125,28 @@ void mergeSortInventory(Inventory &inventory)
 
     auto start = chrono::high_resolution_clock::now();
 
-    mergeSortHelper(array, 0, count - 1);
+    mergeSortHelper(array, 0, count - 1, sortBy);
 
     auto end = chrono::high_resolution_clock::now();
     long long elapsed = getElapsedMicroseconds(start, end);
 
-    cout << "\n--- Sorted by Price (Merge Sort) ---\n\n";
-    cout << setw(15) << "Name" << setw(10) << "Price\n";
-    cout << string(25, '-') << "\n";
+    string sortType = (sortBy == 1) ? "Price" : "Quantity";
+    cout << "\n--- Sorted by " << sortType << " (Merge Sort) ---\n\n";
+    cout << setw(15) << "Name" << setw(12) << sortType << "\n";
+    cout << string(27, '-') << "\n";
 
     for (int i = 0; i < count; i++)
     {
-        cout << setw(15) << array[i].name
-             << setw(10) << fixed << setprecision(2) << array[i].price << "\n";
+        if (sortBy == 1)
+        {
+            cout << setw(15) << array[i].name
+                 << setw(12) << fixed << setprecision(2) << array[i].price << "\n";
+        }
+        else
+        {
+            cout << setw(15) << array[i].name
+                 << setw(12) << array[i].quantity << "\n";
+        }
     }
 
     cout << "\nMerge Sort Time: " << elapsed << " microseconds\n";

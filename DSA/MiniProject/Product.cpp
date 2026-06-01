@@ -8,5 +8,4 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };

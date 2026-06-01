@@ -10,38 +10,25 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };
 
-class Node
+struct Node
 {
-public:
     Product data;
     Node *next;
 };
 
-class Inventory
+struct Inventory
 {
-private:
     Node *head;
-
-public:
-    Inventory();
-    ~Inventory();
-
-    void addProduct(Product p);
-    void deleteProduct(int id);
-    void updateProduct(int id);
-    void displayProducts();
-    int countProducts();
-    Node *getHead();
 };
 
-void bubbleSort(Inventory &inventory);
+int countProducts(Inventory &inv);
+Node *getHead(Inventory &inv);
 
-void bubbleSort(Inventory &inventory)
+void bubbleSort(Inventory &inv, int sortBy)
 {
-    int count = inventory.countProducts();
+    int count = countProducts(inv);
 
     if (count == 0)
     {
@@ -51,7 +38,7 @@ void bubbleSort(Inventory &inventory)
 
     Product *array = new Product[count];
 
-    Node *current = inventory.getHead();
+    Node *current = getHead(inv);
     int index = 0;
     while (current != NULL)
     {
@@ -66,7 +53,17 @@ void bubbleSort(Inventory &inventory)
     {
         for (int j = 0; j < count - 1 - i; j++)
         {
-            if (array[j].price > array[j + 1].price)
+            bool swap = false;
+            if (sortBy == 1)
+            {
+                swap = array[j].price > array[j + 1].price;
+            }
+            else if (sortBy == 2)
+            {
+                swap = array[j].quantity > array[j + 1].quantity;
+            }
+
+            if (swap)
             {
                 Product temp = array[j];
                 array[j] = array[j + 1];
@@ -78,14 +75,23 @@ void bubbleSort(Inventory &inventory)
     auto end = chrono::high_resolution_clock::now();
     long long elapsed = getElapsedMicroseconds(start, end);
 
-    cout << "\n--- Sorted by Price (Bubble Sort) ---\n\n";
-    cout << setw(15) << "Name" << setw(10) << "Price\n";
-    cout << string(25, '-') << "\n";
+    string sortType = (sortBy == 1) ? "Price" : "Quantity";
+    cout << "\n--- Sorted by " << sortType << " (Bubble Sort) ---\n\n";
+    cout << setw(15) << "Name" << setw(12) << sortType << "\n";
+    cout << string(27, '-') << "\n";
 
     for (int i = 0; i < count; i++)
     {
-        cout << setw(15) << array[i].name
-             << setw(10) << fixed << setprecision(2) << array[i].price << "\n";
+        if (sortBy == 1)
+        {
+            cout << setw(15) << array[i].name
+                 << setw(12) << fixed << setprecision(2) << array[i].price << "\n";
+        }
+        else
+        {
+            cout << setw(15) << array[i].name
+                 << setw(12) << array[i].quantity << "\n";
+        }
     }
 
     cout << "\nBubble Sort Time: " << elapsed << " microseconds\n";

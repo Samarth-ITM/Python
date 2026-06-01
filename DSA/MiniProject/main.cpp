@@ -11,7 +11,6 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };
 
 struct Node
@@ -33,10 +32,12 @@ void updateProduct(Inventory &inv, int id);
 void displayProducts(Inventory &inv);
 int countProducts(Inventory &inv);
 Node *getHead(Inventory &inv);
-void linearSearch(Inventory &inv);
-void binarySearch(Inventory &inv);
-void bubbleSort(Inventory &inv);
-void mergeSortInventory(Inventory &inv);
+void linearSearch(Inventory &inv, string searchName);
+void binarySearch(Inventory &inv, string searchName);
+void bubbleSort(Inventory &inv, int sortBy);
+void mergeSortInventory(Inventory &inv, int sortBy);
+void saveToCSV(Inventory &inv);
+void loadFromCSV(Inventory &inv);
 
 void displayMainMenu()
 {
@@ -54,23 +55,22 @@ void displayMainMenu()
 
 void displaySearchMenu()
 {
-    cout << "\n--- Search Options ---\n";
-    cout << "1. Linear Search\n";
-    cout << "2. Binary Search\n";
-    cout << "Enter choice: ";
+    cout << "\n--- Searching by Product Name (Both Linear & Binary) ---\n";
 }
 
 void displaySortMenu()
 {
-    cout << "\n--- Sort Options ---\n";
-    cout << "1. Bubble Sort\n";
-    cout << "2. Merge Sort\n";
-    cout << "Enter choice: ";
+    cout << "\n--- Sort By ---\n";
+    cout << "1. Price\n";
+    cout << "2. Quantity\n";
+    cout << "(Both Bubble & Merge sort will run)\n";
+    cout << "Choose: ";
 }
 
 int main()
 {
     Inventory inv = createInventory();
+    loadFromCSV(inv);
     int choice;
     bool running = true;
 
@@ -84,24 +84,22 @@ int main()
         {
             Product newProduct;
             cout << "\n--- Add New Product ---\n";
-            cout << "Enter Product ID: ";
-            cin >> newProduct.id;
-            cin.ignore();
 
             cout << "Enter Product Name: ";
             getline(cin, newProduct.name);
 
             cout << "Enter Quantity: ";
             cin >> newProduct.quantity;
+            cin.ignore();
 
             cout << "Enter Price: ";
             cin >> newProduct.price;
             cin.ignore();
 
-            cout << "Enter Category: ";
-            getline(cin, newProduct.category);
-
             addProduct(inv, newProduct);
+            saveToCSV(inv);
+            cout << "\nHere are all the products:\n\n";
+            displayProducts(inv);
         }
         else if (choice == 2)
         {
@@ -109,50 +107,50 @@ int main()
         }
         else if (choice == 3)
         {
+            cout << "\nHere are all the products:\n\n";
+            displayProducts(inv);
             cout << "\nEnter Product ID to Delete: ";
             int deleteId;
             cin >> deleteId;
             deleteProduct(inv, deleteId);
+            saveToCSV(inv);
+            cout << "\nUpdated product list:\n\n";
+            displayProducts(inv);
         }
         else if (choice == 4)
         {
+            cout << "\nHere are all the products:\n\n";
+            displayProducts(inv);
             cout << "\nEnter Product ID to Update: ";
             int updateId;
             cin >> updateId;
             updateProduct(inv, updateId);
+            saveToCSV(inv);
+            cout << "\nUpdated product list:\n\n";
+            displayProducts(inv);
         }
         else if (choice == 5)
         {
             displaySearchMenu();
-            int searchChoice;
-            cin >> searchChoice;
+            cout << "Enter Product Name to Search: ";
+            string searchName;
+            getline(cin, searchName);
 
-            if (searchChoice == 1)
-            {
-                linearSearch(inv);
-            }
-            else if (searchChoice == 2)
-            {
-                binarySearch(inv);
-            }
-            else
-            {
-                cout << "\nInvalid choice!\n\n";
-            }
+            linearSearch(inv, searchName);
+            binarySearch(inv, searchName);
         }
         else if (choice == 6)
         {
             displaySortMenu();
-            int sortChoice;
-            cin >> sortChoice;
+            int sortBy;
+            cin >> sortBy;
+            cin.ignore();
 
-            if (sortChoice == 1)
+            if (sortBy == 1 || sortBy == 2)
             {
-                bubbleSort(inv);
-            }
-            else if (sortChoice == 2)
-            {
-                mergeSortInventory(inv);
+                cout << "\n=== Running Both Sorts ===\n";
+                bubbleSort(inv, sortBy);
+                mergeSortInventory(inv, sortBy);
             }
             else
             {
@@ -161,7 +159,8 @@ int main()
         }
         else if (choice == 7)
         {
-            cout << "\nExiting Grocery Inventory System. Goodbye!\n\n";
+            saveToCSV(inv);
+            cout << "Exiting Grocery Inventory System. Goodbye!\n\n";
             deleteAllProducts(inv.head);
             running = false;
         }

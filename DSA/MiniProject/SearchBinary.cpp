@@ -10,38 +10,25 @@ struct Product
     string name;
     int quantity;
     float price;
-    string category;
 };
 
-class Node
+struct Node
 {
-public:
     Product data;
     Node *next;
 };
 
-class Inventory
+struct Inventory
 {
-private:
     Node *head;
-
-public:
-    Inventory();
-    ~Inventory();
-
-    void addProduct(Product p);
-    void deleteProduct(int id);
-    void updateProduct(int id);
-    void displayProducts();
-    int countProducts();
-    Node *getHead();
 };
 
-void binarySearch(Inventory &inventory);
+int countProducts(Inventory &inv);
+Node *getHead(Inventory &inv);
 
-void binarySearch(Inventory &inventory)
+void binarySearch(Inventory &inv, string searchName)
 {
-    int count = inventory.countProducts();
+    int count = countProducts(inv);
 
     if (count == 0)
     {
@@ -51,7 +38,7 @@ void binarySearch(Inventory &inventory)
 
     Product *array = new Product[count];
 
-    Node *current = inventory.getHead();
+    Node *current = getHead(inv);
     int index = 0;
     while (current != NULL)
     {
@@ -60,11 +47,12 @@ void binarySearch(Inventory &inventory)
         current = current->next;
     }
 
+    // Sort by product name for binary search
     for (int i = 0; i < count - 1; i++)
     {
         for (int j = 0; j < count - 1 - i; j++)
         {
-            if (array[j].id > array[j + 1].id)
+            if (array[j].name > array[j + 1].name)
             {
                 Product temp = array[j];
                 array[j] = array[j + 1];
@@ -72,10 +60,6 @@ void binarySearch(Inventory &inventory)
             }
         }
     }
-
-    cout << "\nEnter Product ID to Search: ";
-    int searchId;
-    cin >> searchId;
 
     auto start = chrono::high_resolution_clock::now();
 
@@ -88,13 +72,13 @@ void binarySearch(Inventory &inventory)
     {
         int mid = left + (right - left) / 2;
 
-        if (array[mid].id == searchId)
+        if (array[mid].name == searchName)
         {
             found = true;
             foundIndex = mid;
             break;
         }
-        else if (array[mid].id < searchId)
+        else if (array[mid].name < searchName)
         {
             left = mid + 1;
         }
@@ -109,20 +93,20 @@ void binarySearch(Inventory &inventory)
 
     if (found)
     {
-        cout << "\n--- Product Found ---\n\n";
+        cout << "\n--- Binary Search Results ---\n";
+        cout << "Product Found!\n";
         cout << "ID: " << array[foundIndex].id << "\n";
         cout << "Name: " << array[foundIndex].name << "\n";
         cout << "Quantity: " << array[foundIndex].quantity << "\n";
         cout << "Price: " << fixed << setprecision(2) << array[foundIndex].price << "\n";
-        cout << "Category: " << array[foundIndex].category << "\n";
+        cout << "Time: " << elapsed << " microseconds | Complexity: O(log n)\n\n";
     }
     else
     {
-        cout << "\nProduct Not Found!\n";
+        cout << "\n--- Binary Search Results ---\n";
+        cout << "Product Not Found!\n";
+        cout << "Time: " << elapsed << " microseconds | Complexity: O(log n)\n\n";
     }
-
-    cout << "\nBinary Search Time: " << elapsed << " microseconds\n";
-    cout << "Complexity: O(log n)\n\n";
 
     delete[] array;
 }
